@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>쿵쿵따</title>
+</head>
+
+<body>
+    <h1>쿵쿵따 게임</h1>
+    <h2>참여인원 : <span id="number"></span>명</h2>
+    <h2>순서 : <span id="order">1</span>번 째</h2>
+    <h3>제시어 :<span id="word"></span> 입니다.</h3>
+    <input type="text">
+    <button>쿵쿵따!</button>
+    <script>
+        const number = parseInt(prompt('몇 명?'));
+        const $number = document.querySelector('#number')
+        $number.textContent = number;
+        const $order = document.querySelector('#order');
+        const $word = document.querySelector('#word');
+        const $button = document.querySelector('button');
+        let order = parseInt($order.textContent);
+        let word;
+        let newWord;
+        console.log(word);
+        console.log(!word);
+        const $input = document.querySelector('input')
+        const onWord = (event) => {
+            newWord = event.target.value;
+        }
+        $input.addEventListener('input', onWord);
+        const onClick = $button.addEventListener('click', () => {
+            if (!word) {
+                if (newWord.length === 3) {
+                    $word.textContent = newWord;
+                    word = newWord
+                } else {
+                    alert('3글자를 입력해주세요');
+                }
+            } else {
+                if (newWord.length === 3 && word[word.length - 1] === newWord[0]) {
+                    $word.textContent = newWord;
+                    word = newWord;
+                } else {
+                    alert('틀렸습니다.');
+                }
+            }
+            if (order < number) {
+                $order.textContent = order + 1
+                order ++
+            } else {
+                $order.textContent = 1
+            }
+            console.log(order);
+            $input.value = '';
+            $input.focus();
+        });
+
+
+
+    </script>
+
+
+
+
+</body>
+
+</html>
