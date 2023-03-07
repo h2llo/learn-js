@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +10,7 @@
 
   </style>
 </head>
+
 <body>
   <div><span id="order">1</span>번째 참가자</div>
   <div>제시어:<span id="word"></span></div>
@@ -18,10 +20,40 @@
   <button class="btn">입력2</button>
   <script>
     const number = parseInt(prompt('몇 명이 참가하나요?'));
-    console.log('number',number)
-    
+    console.log('number', number);
+    let word; //제시어
+    let newWord; //새로 입력한 단어
+    const $input = document.querySelector('input');
+    const $button = document.querySelector('button');
+    const $word = document.querySelector('#word');
+    const $order = document.querySelector('#order');
+    const onClickButton = () => {
+      if (!word || word[word.length - 1] === newWord[0]) {
+        word = newWord;
+        $word.textContent = word;
+        const order = parseInt($order.textContent) //현재 순서
+        if (order + 1 > number) {
+          $order.textContent = 1;
+        } else {
+          $order.textContent = order + 1;
+        }
+      } else {//올바르지 않은가
+        alert('틀렸습니다.')
+      }
+      $input.value = '';
+      $input.focus();
+    };
+
+    const onInput = (event) => {
+      newWord = event.target.value;
+    };
+    $button.addEventListener('click', onClickButton);
+    $input.addEventListener('input', onInput);
+
+
   </script>
-    
-    
+
+
 </body>
+
 </html>
