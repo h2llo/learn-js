@@ -65,18 +65,27 @@
         let numTwo = '';
         const $operaotr = document.querySelector('#operator');
         const $result = document.querySelector('#result');
-
         const numClick = (num) => () => {
-            if (operator) {
-                if (!numTwo) {
-                    $result.value = '';
-                }
-                numTwo += num;
-            } else {
+            if (!operator) {
                 numOne += num
+                $result.value += num;
+            } else {
+                if (!numOne) {
+                    if (operator === '-') {
+                        numOne -= num
+                        $result.value -= num;
+                    }
+
+                } else {
+                    if (!numTwo) {
+                        $result.value = '';
+                    }
+                    numTwo += num;
+                    $result.value += num;
+                }
             }
-            $result.value += num;
         }
+
         document.querySelector('#num-0').addEventListener('click', numClick('0'));
         document.querySelector('#num-1').addEventListener('click', numClick('1'));
         document.querySelector('#num-2').addEventListener('click', numClick('2'));
@@ -93,7 +102,11 @@
                     operator = op;
                     $operaotr.value = operator;
                 } else {
-                    alert('숫자를 입력해주세요')
+                    if (op === '-') {
+                        operator = op;
+                        $operaotr.value = operator;
+                    }
+
                 }
             } else {
                 if (numOne && numTwo) {
