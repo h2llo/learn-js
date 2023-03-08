@@ -1,0 +1,101 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>숫자야구</title>
+</head>
+
+<body>
+  <form id="form">
+    <input type="text" id="input">
+    <button>확인</button>
+  </form>
+  <div id="logs"></div>
+  <script>
+    const $input = document.querySelector('#input');
+    const $form = document.querySelector('#form');
+    const $logs = document.querySelector('#logs');
+
+    const numbers = Array(9).fill().map((el, idx) => {
+      return idx + 1;
+    })
+    const answer = []
+    for (let i = 0; i < 4; i++) {
+      let ranNum = Math.floor(Math.random() * numbers.length)
+      answer.push(numbers[ranNum]);
+      numbers.splice(ranNum, 1);
+    }
+    console.log(answer);
+
+    function fail(){
+      $logs.append('실패입니다.',document.createElement('br'));
+    }
+
+
+
+    const tries = [];
+    const checkInput = (input) => {
+      if (input.length !== 4) {
+        alert('4자리를 입력해주세요')
+        return;
+      }
+      if (new Set(input).size !== 4) {
+        alert('중복된 값이 있습니다.')
+        return;
+      }
+      if (tries.includes(input)) {
+        alert('이미 확인한 값 입니다.')
+        return;
+      }
+      return true
+    }
+    let input;
+    let out = 0;
+    $form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      input = $input.value;
+      $input.value = '';
+      if (tries.length >= 9) {
+        fail();
+        return;
+      }
+      if (checkInput(input)) {
+        if (input !== answer.join('')) {
+          let strike = 0;
+          let ball = 0;
+          for (let n = 0; n < 4; n++) {
+            let idx = input.indexOf(answer[n])
+            if (idx > -1) {
+              if (idx === n) {
+                strike += 1
+
+              } else {
+                ball += 1
+              }
+            }
+          }
+          if (strike + ball === 0) {
+            out++;
+            $logs.append(`${out}아웃`, document.createElement('br'));
+          } else {
+            $logs.append(`${strike}스트라이크 ${ball}볼`, document.createElement('br'));
+          }
+          if (out === 2) {
+            fail();
+            return;
+          }
+        }
+        if (input === answer.join('')) {
+          $logs.append('홈런!');
+        }
+      }
+      tries.push(input);
+    }
+    )
+
+    const compare = () => { }
+
+  </script>
+</body>
+
+</html>
