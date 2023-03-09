@@ -58,7 +58,7 @@
       if (tries.length >= 9) {
         const message = document.createTextNode(`패배! 정답은 ${answer.join('')}`);
         $logs.appendChild(message);
-        return
+        return;
       }
       let strike = 0;
       let ball = 0;
